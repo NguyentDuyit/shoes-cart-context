@@ -115,57 +115,39 @@ export const CartProvider = ({ children }) => {
     const [products] = useState(dataProducts)
     const [cart, setCart] = useState([])
     function addToCart(item) {
-        // let checkItem = cart.filter(items => items.id == item.id)
-        // if (checkItem.length == 0) {
-        //     setCart((prevItem) => [
-        //         ...prevItem, item
-        //     ])
-        // } else {
-        // 10 items
-        //     checkItem.map((i) => {
-        //         i.quanlity++
-        //         setCart((prevItem) => [
-        //             ...prevItem
-        //         ])
-        //     })
-        // }
         const productItem = products.find(cart => cart.id == item.id)
         setCart(prevState => {
             const deepClone = JSON.parse(JSON.stringify(prevState));
             const indexOf = deepClone.findIndex(item => item.id === productItem.id)
-            if(indexOf  >= 0) {
+            if (indexOf >= 0) {
                 deepClone[indexOf].quanlity = deepClone[indexOf].quanlity + 1;
                 return [...deepClone]
-            }  else {
+            } else {
                 return [...prevState, productItem]
             }
         });
     }
-console.log("cart: ", cart)
-
     function incQty(id) {
-        cart.map((i) => {
-            if (i.id == id) {
-                i.quanlity++
-                setCart((prevItem) => [
-                    ...prevItem
-                ])
-            }
+        const productItem = products.find(cart => cart.id == id)
+        setCart(prevState => {
+            const deepClone = JSON.parse(JSON.stringify(prevState))
+            const indexOf = deepClone.findIndex(item => item.id === productItem.id)
+            deepClone[indexOf].quanlity = deepClone[indexOf].quanlity + 1;
+            return [...deepClone]
         })
     }
 
     function decQty(id) {
-        cart.map((i) => {
-            if (i.id == id) {
-                if (i.quanlity == 1) {
-                    const newArray = cart.filter(i => i.id !== id)
-                    setCart(newArray)
-                } else {
-                    i.quanlity--
-                    setCart((prevItem) => [
-                        ...prevItem
-                    ])
-                }
+        const productItem = products.find(cart => cart.id == id)
+        setCart(prevState => {
+            const deepClone = JSON.parse(JSON.stringify(prevState))
+            const indexOf = deepClone.findIndex(item => item.id === productItem.id)
+            if (deepClone[indexOf].quanlity == 1) {
+                const newArray = cart.filter(i => i.id !== id)
+                return newArray
+            } else if (deepClone[indexOf].quanlity > 1) {
+                deepClone[indexOf].quanlity = deepClone[indexOf].quanlity - 1;
+                return [...deepClone]
             }
         })
     }

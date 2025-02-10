@@ -4,11 +4,13 @@ function ShoesCart() {
     const { cart, incQty, decQty, removeItem } = useShoesContext()
     let totalPrice = 0
     let totalQty = 0
-    cart.map((i) => {
-        const priceItems = i.quanlity * i.price
-        totalQty += i.quanlity
-        totalPrice += priceItems
-    })
+    if (cart.length > 0) {
+        for (var key in cart) {
+            const priceItems = cart[key].quanlity * cart[key].price
+            totalQty += cart[key].quanlity
+            totalPrice += priceItems
+        }
+    }
     return (
         <>
             <div className="card">

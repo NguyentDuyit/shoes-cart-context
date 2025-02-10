@@ -27,8 +27,8 @@ function ShoesProduct() {
                         </div>
                         <div className="shopItem_bottom">
                             <div className="shopItem_price">${value.price}</div>
-                            <div className="shopItem_button">
-                                <p onClick={() => handleAddToCart(value)}>ADD TO CART</p>
+                            <div className="shopItem_button" onClick={() => handleAddToCart(value)}>
+                                <p>ADD TO CART</p>
                             </div>
                         </div>
                     </div>
